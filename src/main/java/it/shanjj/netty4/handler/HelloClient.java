@@ -21,7 +21,7 @@ public class HelloClient {
 			b.handler(new ChannelInitializer<SocketChannel>() {
 				@Override
 				public void initChannel(SocketChannel ch) throws Exception {
-					ch.pipeline().addLast(new HelloClientIntHandler());
+					ch.pipeline().addLast(new HelloClientInHandler());
 				}
 			});
 

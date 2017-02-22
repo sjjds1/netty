@@ -7,8 +7,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HelloClientIntHandler extends ChannelInboundHandlerAdapter {
-	private static Logger	logger	= LoggerFactory.getLogger(HelloClientIntHandler.class);
+public class HelloClientInHandler extends ChannelInboundHandlerAdapter {
+	private static Logger	logger	= LoggerFactory.getLogger(HelloClientInHandler.class);
 	@Override
 	// 读取服务端的信息
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
