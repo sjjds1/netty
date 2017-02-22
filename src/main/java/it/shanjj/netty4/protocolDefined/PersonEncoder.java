@@ -1,4 +1,4 @@
-package it.shanjj.netty4.definedProtocol;
+package it.shanjj.netty4.protocolDefined;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -9,7 +9,7 @@ public class PersonEncoder extends MessageToByteEncoder<Person> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Person msg, ByteBuf out) throws Exception {
-		byte[] datas = ByteObjConverter.ObjectToByte(msg);
+		byte[] datas = ByteObjConverter.objectToByte(msg);
 		out.writeBytes(datas);
 		ctx.flush();
 	}

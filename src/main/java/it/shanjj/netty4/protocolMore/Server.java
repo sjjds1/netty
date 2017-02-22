@@ -1,4 +1,4 @@
-package it.shanjj.netty4.definedProtocol;
+package it.shanjj.netty4.protocolMore;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -9,23 +9,24 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+// 测试coder 和 handler 的混合使用
 public class Server {
 	public void start(int port) throws Exception {
-		EventLoopGroup bossGroup = new NioEventLoopGroup(); 
+		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
-			ServerBootstrap b = new ServerBootstrap(); 
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class) 
-					.childHandler(new ChannelInitializer<SocketChannel>() { 
-								@Override
-								public void initChannel(SocketChannel ch) throws Exception {
-									ch.pipeline().addLast(new PersonDecoder());
-									ch.pipeline().addLast(new BusinessHandler());
-								}
-							}).option(ChannelOption.SO_BACKLOG, 128) 
-					.childOption(ChannelOption.SO_KEEPALIVE, true); 
+			ServerBootstrap b = new ServerBootstrap();
+			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+					.childHandler(new ChannelInitializer<SocketChannel>() {
+						@Override
+						public void initChannel(SocketChannel ch) throws Exception {
+							ch.pipeline().addLast(new PersonDecoder());
+							ch.pipeline().addLast(new StringDecoder());
+							ch.pipeline().addLast(new BusinessHandler());
+						}
+					}).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
 
-			ChannelFuture f = b.bind(port).sync(); 
+			ChannelFuture f = b.bind(port).sync();
 
 			f.channel().closeFuture().sync();
 		} finally {

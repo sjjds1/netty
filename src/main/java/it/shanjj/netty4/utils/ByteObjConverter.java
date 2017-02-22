@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class ByteObjConverter {
-	public static Object ByteToObject(byte[] bytes) {
+	public static Object byteToObject(byte[] bytes) {
 		Object obj = null;
 		ByteArrayInputStream bi = new ByteArrayInputStream(bytes);
 		ObjectInputStream oi = null;
@@ -31,7 +31,7 @@ public class ByteObjConverter {
 		return obj;
 	}
 
-	public static byte[] ObjectToByte(Object obj) {
+	public static byte[] objectToByte(Object obj) {
 		byte[] bytes = null;
 		ByteArrayOutputStream bo = new ByteArrayOutputStream();
 		ObjectOutputStream oo = null;

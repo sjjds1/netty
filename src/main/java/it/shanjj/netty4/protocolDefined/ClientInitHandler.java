@@ -1,4 +1,4 @@
-package it.shanjj.netty4.definedProtocol;
+package it.shanjj.netty4.protocolDefined;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

@@ -1,4 +1,4 @@
-package it.shanjj.netty4.definedProtocol;
+package it.shanjj.netty4.protocolDefined;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

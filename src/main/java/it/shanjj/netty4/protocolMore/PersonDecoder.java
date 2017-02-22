@@ -1,4 +1,4 @@
-package it.shanjj.netty4.definedProtocol;
+package it.shanjj.netty4.protocolMore;
 
 import java.util.List;
 
@@ -11,9 +11,16 @@ import it.shanjj.netty4.utils.ByteObjConverter;
 public class PersonDecoder extends ByteToMessageDecoder {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		ByteBufToBytes read = new ByteBufToBytes();
-		Object obj = ByteObjConverter.ByteToObject(read.read(in));
-		out.add(obj);
+		byte n = "n".getBytes()[0];
+		byte p = in.readByte();
+		in.resetReaderIndex();
+		if (n != p) {
+			// 把读取的起始位置重置
+			ByteBufToBytes reader = new ByteBufToBytes();
+			out.add(ByteObjConverter.byteToObject(reader.read(in)));
+		} else {
+			// 执行其它的decode
+			ctx.fireChannelRead(in);
+		}
 	}
-
 }
