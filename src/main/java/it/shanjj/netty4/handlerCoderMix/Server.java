@@ -15,27 +15,26 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
 // Server 启动netty服务，并注册handler、coder，注意注册的顺序
 public class Server {
 	public void start(int port) throws Exception {
-		EventLoopGroup bossGroup = new NioEventLoopGroup(); 
+		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
-			ServerBootstrap b = new ServerBootstrap(); 
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class) 
-					.childHandler(new ChannelInitializer<SocketChannel>() { 
-								@Override
-								public void initChannel(SocketChannel ch) throws Exception {
-									// 都属于ChannelOutboundHandler，逆序执行
-									ch.pipeline().addLast(new HttpResponseEncoder());
-									ch.pipeline().addLast(new StringEncoder());
-									
-									// 都属于ChannelIntboundHandler，按照顺序执行
-									ch.pipeline().addLast(new HttpRequestDecoder());
-									ch.pipeline().addLast(new StringDecoder());
-									ch.pipeline().addLast(new BusinessHandler());
-								}
-							}).option(ChannelOption.SO_BACKLOG, 128) 
-					.childOption(ChannelOption.SO_KEEPALIVE, true); 
+			ServerBootstrap b = new ServerBootstrap();
+			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
+					.childHandler(new ChannelInitializer<SocketChannel>() {
+						@Override
+						public void initChannel(SocketChannel ch) throws Exception {
+							// 都属于ChannelOutboundHandler，逆序执行
+							ch.pipeline().addLast(new HttpResponseEncoder());
+							ch.pipeline().addLast(new StringEncoder());
 
-			ChannelFuture f = b.bind(port).sync(); 
+							// 都属于ChannelIntboundHandler，按照顺序执行
+							ch.pipeline().addLast(new HttpRequestDecoder());
+							ch.pipeline().addLast(new StringDecoder());
+							ch.pipeline().addLast(new BusinessHandler());
+						}
+					}).option(ChannelOption.SO_BACKLOG, 128).childOption(ChannelOption.SO_KEEPALIVE, true);
+
+			ChannelFuture f = b.bind(port).sync();
 
 			f.channel().closeFuture().sync();
 		} finally {

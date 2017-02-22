@@ -19,15 +19,15 @@ import io.netty.handler.codec.http.HttpHeaders.Values;
 
 // 把String转换成httpResponse
 public class StringEncoder extends ChannelOutboundHandlerAdapter {
-	private Logger	logger	= LoggerFactory.getLogger(StringEncoder.class);
+	private Logger logger = LoggerFactory.getLogger(StringEncoder.class);
 
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
 		logger.info("StringEncoder response to client.");
 		String serverMsg = (String) msg;
 
-		FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(serverMsg
-				.getBytes()));
+		FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK,
+				Unpooled.wrappedBuffer(serverMsg.getBytes()));
 		response.headers().set(CONTENT_TYPE, "text/plain");
 		response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
 		response.headers().set(CONNECTION, Values.KEEP_ALIVE);

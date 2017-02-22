@@ -1,4 +1,4 @@
-package it.shanjj.netty4.http;
+package it.shanjj.netty4.utils;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -8,6 +8,10 @@ public class ByteBufToBytes {
 
 	private boolean	end	= true;
 
+	public ByteBufToBytes() {
+		temp = Unpooled.buffer();
+	}
+	
 	public ByteBufToBytes(int length) {
 		temp = Unpooled.buffer(length);
 	}

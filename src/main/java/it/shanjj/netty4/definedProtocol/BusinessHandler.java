@@ -1,4 +1,4 @@
-package it.shanjj.netty4.handlerCoderMix;
+package it.shanjj.netty4.definedProtocol;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -7,17 +7,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BusinessHandler extends ChannelInboundHandlerAdapter {
-	private Logger logger = LoggerFactory.getLogger(BusinessHandler.class);
+	private Logger	logger	= LoggerFactory.getLogger(BusinessHandler.class);
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		String clientMsg = "client said : " + (String) msg;
-		logger.info("BusinessHandler read msg from client :" + clientMsg);
-		ctx.write("I am very OK!");
+		Person person = (Person) msg;
+		System.out.println("BusinessHandler read msg from client :" + person.toString());
 	}
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		ctx.flush();
+	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		
 	}
 }

@@ -6,9 +6,10 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponse;
+import it.shanjj.netty4.utils.ByteBufToBytes;
 
 public class ClientInitHandler extends ChannelInboundHandlerAdapter {
-	private ByteBufToBytes	reader;
+	private ByteBufToBytes reader;
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {

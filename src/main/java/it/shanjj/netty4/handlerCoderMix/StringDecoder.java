@@ -1,21 +1,22 @@
 package it.shanjj.netty4.handlerCoderMix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import it.shanjj.netty4.utils.ByteBufToBytes;
 
 public class StringDecoder extends ChannelInboundHandlerAdapter {
-	private static Logger	logger	= LoggerFactory.getLogger(StringDecoder.class);
-	private ByteBufToBytes	reader;
+	private static Logger logger = LoggerFactory.getLogger(StringDecoder.class);
+	ByteBufToBytes reader = null;
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		logger.info("StringDecoder : msg's type is " + msg.getClass());
+		System.out.println("StringDecoder : msg's type is " + msg.getClass());
 		if (msg instanceof HttpRequest) {
 			HttpRequest request = (HttpRequest) msg;
 			reader = new ByteBufToBytes((int) HttpHeaders.getContentLength(request));
@@ -27,7 +28,7 @@ public class StringDecoder extends ChannelInboundHandlerAdapter {
 
 			if (reader.isEnd()) {
 				byte[] clientMsg = reader.readFull();
-				logger.info("StringDecoder : change httpcontent to string ");
+				System.out.println("StringDecoder : change httpcontent to string ");
 				ctx.fireChannelRead(new String(clientMsg));
 			}
 		}
